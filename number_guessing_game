@@ -1,0 +1,23 @@
+import random
+x = random.randint(1,100)
+print('Welcome to the number guessing game! Guess the number X!')
+
+def is_valid(n):
+  if 1 <= n <= 100:
+    return True
+  else:
+    return False
+     
+while True:
+    num = int(input('Please input integer number from 1 to 100: '))
+    if is_valid(num) == False:
+        print('Your number is not correct. You should enter integer number from 1 to 100')
+    else:
+      if num < x:
+        print('Your number is less than X. Please try again')
+      elif num > x:
+        print('Your number is bigger than X. Please try again')
+      elif num == x:
+        print('You guessed it! Congratulations!')
+        break
+ print('Thank you for playing the number guessing game. See you again...') 
