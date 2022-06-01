@@ -1,0 +1,34 @@
+def exchange(usd = None, rub = None, rate = None):
+    try:
+        if (usd in (None, 0) and rate in (None, 0)) or (rate in (None, 0) and rub in (None, 0)) \
+        or (usd in (None, 0) and rub in (None, 0)):
+            raise ValueError
+    except ValueError:
+            return 'ValueError: Not enough arguments'
+    else:
+        try:        
+            if (usd != None and rub != None and rate != None):
+                raise ValueError
+        except ValueError:
+                return 'ValueError: Too many arguments'
+        else:
+            if usd == None: 
+                usd = rub / rate
+                return usd
+            elif rub == None:
+                rub = usd * rate
+                return rub
+            elif rate == None:
+                rate = rub / usd
+                return rate
+        finally:
+            pass
+    finally:
+        pass
+    
+print(exchange(usd=100, rub=8500))
+print(exchange(usd=100, rate=85))
+print(exchange(rub=1000, rate=85))
+print(exchange(rub=1000, rate=85, usd=90))
+print(exchange(rub=1000))
+print(exchange(rub=8500, rate=0))
