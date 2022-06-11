@@ -1,0 +1,79 @@
+from hidden import north, center, south
+
+from collections import deque
+nr = deque() 
+cn = deque()
+st = deque()
+
+for n in north:  # cоздаем списки и убираем разбиение по чекам
+    nr.extend(n)
+for c in center:
+    cn.extend(c)
+for s in south:
+    st.extend(s)
+    
+nr_len = len(nr)  # определяем длину списков
+cn_len = len(cn)
+st_len = len(st)
+
+max_len = max(nr_len, cn_len, st_len)
+
+if max_len == nr_len:       # определяем, где были самые большие продажи
+    print('north', max_len)
+elif max_len == cn_len:
+    print('center', max_len)
+elif max_len == st_len:
+    print('south', max_len)
+
+from collections import Counter    
+nr_counter = Counter(nr)        # считаем продажи по наименованиям с помощью Counter
+cn_counter = Counter(cn)
+st_counter = Counter(st)
+
+print(nr_counter)
+print(cn_counter)
+print(st_counter)
+
+nr_counter_ordered = nr_counter.most_common() # сортируем список по убыванию счетчика
+nr_list = list(nr_counter_ordered)
+print(nr_list[-1])                  # выбираем самый редко встречающийся элемент
+
+print(cn_counter['Beer'])
+print(nr_counter['Beer'])               
+if cn_counter['Beer'] > nr_counter['Beer']:     # выбираем какой товар чаще покупали в центре, чем на севере
+    print('Beer')
+elif cn_counter['Cola'] > nr_counter['Cola']:
+    print('Cola')
+elif cn_counter['Bread'] > nr_counter['Bread']:
+    print('Bread')
+elif cn_counter['Yoghurt'] > nr_counter['Yoghurt']:
+    print('Yoghurt')
+            
+
+all_counter = nr_counter + cn_counter + st_counter  # складываем счетчики, чтобы получить полный список элементов
+all_list = list(all_counter.keys())   # список элементов готов
+print(all_list)
+flag = False
+for elem in all_list:       # проверяем, есть ли элемент, продажи которого в одном магазине больше, чем в двух других
+    if nr_counter[elem] > cn_counter[elem] + st_counter[elem]:
+        print('north', elem, nr_counter[elem])
+        flag = True
+        break
+    elif cn_counter[elem] > nr_counter[elem] + st_counter[elem]:
+        print('center', elem, cn_counter[elem])
+        flag = True
+        break
+    elif st_counter[elem] > nr_counter[elem] + cn_counter[elem]:
+        print('south', elem, st_counter[elem])
+        flag = True
+        break
+if not flag:
+    print ('Таких элементов нет')
+    
+
+print(all_counter)                # сколько раз был куплен второй по популярности товар во всех магазинах
+print(all_counter.most_common(2)) # создаем список из кортежей и выводим два первых элемента
+
+print('north=', north)
+print('center=', center)
+print('south=', south)
